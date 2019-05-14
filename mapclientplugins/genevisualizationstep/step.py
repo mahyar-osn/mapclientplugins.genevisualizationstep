@@ -8,6 +8,7 @@ from PySide import QtGui
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.genevisualizationstep.configuredialog import ConfigureDialog
+from mapclientplugins.genevisualizationstep.utils.visualization import Visualization
 
 
 class GeneVisualizationStep(WorkflowStepMountPoint):
@@ -27,7 +28,7 @@ class GeneVisualizationStep(WorkflowStepMountPoint):
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#uses',
                       'data_frame'))
         # Port data:
-        self._dataframe= None # data_frame
+        self._dataframe = None # data_frame
         # Config:
         self._config = {}
         self._config['identifier'] = ''
@@ -39,6 +40,9 @@ class GeneVisualizationStep(WorkflowStepMountPoint):
         may be connected up to a button in a widget for example.
         """
         # Put your execute step code here before calling the '_doneExecution' method.
+        vis = Visualization(self._dataframe)
+        vis.viewTable()
+
         self._doneExecution()
 
     def setPortData(self, index, dataIn):
@@ -50,7 +54,7 @@ class GeneVisualizationStep(WorkflowStepMountPoint):
         :param index: Index of the port to return.
         :param dataIn: The data to set for the port at the given index.
         """
-        self._portData0 = dataIn # data_frame
+        self._dataframe = dataIn # data_frame
 
     def configure(self):
         """
