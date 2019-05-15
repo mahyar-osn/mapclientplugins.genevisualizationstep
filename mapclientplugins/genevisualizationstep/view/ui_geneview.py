@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'geneview.ui'
 #
-# Created: Tue May 14 16:18:29 2019
+# Created: Tue May 14 16:49:26 2019
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -10,9 +10,9 @@
 from PySide import QtCore, QtGui
 
 
-class Ui_SmoothfitWidget(object):
+class Ui_GeneVisualizationWidget(object):
     def setupUi(self, GeneVisualizationWidget):
-        GeneVisualizationWidget.setObjectName("SmoothfitWidget")
+        GeneVisualizationWidget.setObjectName("GeneVisualizationWidget")
         GeneVisualizationWidget.resize(833, 632)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -116,15 +116,14 @@ class Ui_SmoothfitWidget(object):
         self.gridLayout.setSpacing(3)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
-        self.alignSaveButton = QtGui.QPushButton(self.viewerWidgets)
-        self.alignSaveButton.setEnabled(True)
-        self.alignSaveButton.setObjectName("alignSaveButton")
-        self.gridLayout.addWidget(self.alignSaveButton, 0, 1, 1, 1)
+        self.viewXMLButton = QtGui.QPushButton(self.viewerWidgets)
+        self.viewXMLButton.setEnabled(True)
+        self.viewXMLButton.setObjectName("viewXMLButton")
+        self.gridLayout.addWidget(self.viewXMLButton, 0, 1, 1, 1)
         self.viewScaffoldButton = QtGui.QPushButton(self.viewerWidgets)
         self.viewScaffoldButton.setEnabled(True)
         self.viewScaffoldButton.setObjectName("viewScaffoldButton")
         self.gridLayout.addWidget(self.viewScaffoldButton, 0, 0, 1, 1)
-        self.gridLayout.setRowStretch(0, 2)
         self.verticalLayout_7.addWidget(self.viewerWidgets)
         self.line_3 = QtGui.QFrame(self.ViewGroupBox)
         self.line_3.setFrameShape(QtGui.QFrame.VLine)
@@ -248,10 +247,10 @@ class Ui_SmoothfitWidget(object):
         self.verticalLayout_2.addWidget(self.scrollArea)
         self.dockWidget.setWidget(self.dockWidgetContents)
         self.horizontalLayout.addWidget(self.dockWidget)
-        self.sceneviewerWidget = SceneviewerWidget(GeneVisualizationWidget)
+        self.sceneviewerWidget = BaseSceneviewerWidget(GeneVisualizationWidget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setVerticalStretch(6)
         sizePolicy.setHeightForWidth(self.sceneviewerWidget.sizePolicy().hasHeightForWidth())
         self.sceneviewerWidget.setSizePolicy(sizePolicy)
         self.sceneviewerWidget.setObjectName("sceneviewerWidget")
@@ -262,49 +261,49 @@ class Ui_SmoothfitWidget(object):
         self.toolBox.layout().setSpacing(2)
         QtCore.QMetaObject.connectSlotsByName(GeneVisualizationWidget)
 
-    def retranslateUi(self, SmoothfitWidget):
-        SmoothfitWidget.setWindowTitle(
-            QtGui.QApplication.translate("SmoothfitWidget", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.dockWidget.setWindowTitle(
-            QtGui.QApplication.translate("SmoothfitWidget", "RNA-Seq Mapping", None, QtGui.QApplication.UnicodeUTF8))
+    def retranslateUi(self, GeneVisualizationWidget):
+        GeneVisualizationWidget.setWindowTitle(
+            QtGui.QApplication.translate("GeneVisualizationWidget", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.dockWidget.setWindowTitle(QtGui.QApplication.translate("GeneVisualizationWidget", "RNA-Seq Mapping", None,
+                                                                    QtGui.QApplication.UnicodeUTF8))
         self.ViewGroupBox.setTitle(
-            QtGui.QApplication.translate("SmoothfitWidget", "View", None, QtGui.QApplication.UnicodeUTF8))
-        self.alignSaveButton.setToolTip(
-            QtGui.QApplication.translate("SmoothfitWidget", "Save alignment settings for recall later or when next run",
-                                         None, QtGui.QApplication.UnicodeUTF8))
-        self.alignSaveButton.setText(
-            QtGui.QApplication.translate("SmoothfitWidget", "XML/EX data", None, QtGui.QApplication.UnicodeUTF8))
+            QtGui.QApplication.translate("GeneVisualizationWidget", "View", None, QtGui.QApplication.UnicodeUTF8))
+        self.viewXMLButton.setToolTip(
+            QtGui.QApplication.translate("GeneVisualizationWidget", "Show MBF segmented data", None,
+                                         QtGui.QApplication.UnicodeUTF8))
+        self.viewXMLButton.setText(QtGui.QApplication.translate("GeneVisualizationWidget", "XML/EX data", None,
+                                                                QtGui.QApplication.UnicodeUTF8))
         self.viewScaffoldButton.setToolTip(
-            QtGui.QApplication.translate("SmoothfitWidget", "Load pre-saved alignment settings", None,
+            QtGui.QApplication.translate("GeneVisualizationWidget", "Show scaffold", None,
                                          QtGui.QApplication.UnicodeUTF8))
         self.viewScaffoldButton.setText(
-            QtGui.QApplication.translate("SmoothfitWidget", "Scaffold", None, QtGui.QApplication.UnicodeUTF8))
+            QtGui.QApplication.translate("GeneVisualizationWidget", "Scaffold", None, QtGui.QApplication.UnicodeUTF8))
         self.cellSelectLabel.setText(
-            QtGui.QApplication.translate("SmoothfitWidget", "Cells:", None, QtGui.QApplication.UnicodeUTF8))
+            QtGui.QApplication.translate("GeneVisualizationWidget", "Cells:", None, QtGui.QApplication.UnicodeUTF8))
         self.geneSelectLabel.setText(
-            QtGui.QApplication.translate("SmoothfitWidget", "Genes:", None, QtGui.QApplication.UnicodeUTF8))
+            QtGui.QApplication.translate("GeneVisualizationWidget", "Genes:", None, QtGui.QApplication.UnicodeUTF8))
         self.plotGroupBox.setTitle(
-            QtGui.QApplication.translate("SmoothfitWidget", "Plot", None, QtGui.QApplication.UnicodeUTF8))
+            QtGui.QApplication.translate("GeneVisualizationWidget", "Plot", None, QtGui.QApplication.UnicodeUTF8))
         self.heatMappushButton_4.setText(
-            QtGui.QApplication.translate("SmoothfitWidget", "Table", None, QtGui.QApplication.UnicodeUTF8))
+            QtGui.QApplication.translate("GeneVisualizationWidget", "Table", None, QtGui.QApplication.UnicodeUTF8))
         self.barPlotpushButton.setText(
-            QtGui.QApplication.translate("SmoothfitWidget", "Bar", None, QtGui.QApplication.UnicodeUTF8))
+            QtGui.QApplication.translate("GeneVisualizationWidget", "Bar", None, QtGui.QApplication.UnicodeUTF8))
         self.heatMappushButton.setText(
-            QtGui.QApplication.translate("SmoothfitWidget", "Heatmap", None, QtGui.QApplication.UnicodeUTF8))
+            QtGui.QApplication.translate("GeneVisualizationWidget", "Heatmap", None, QtGui.QApplication.UnicodeUTF8))
         self.checkBox.setText(
-            QtGui.QApplication.translate("SmoothfitWidget", "Cluster", None, QtGui.QApplication.UnicodeUTF8))
+            QtGui.QApplication.translate("GeneVisualizationWidget", "Cluster", None, QtGui.QApplication.UnicodeUTF8))
         self.toolBox.setItemText(self.toolBox.indexOf(self.genePage),
-                                 QtGui.QApplication.translate("SmoothfitWidget", "Control Panel", None,
+                                 QtGui.QApplication.translate("GeneVisualizationWidget", "Control Panel", None,
                                                               QtGui.QApplication.UnicodeUTF8))
         self.viewAllButton.setToolTip(
-            QtGui.QApplication.translate("SmoothfitWidget", "Adjust the view to see the whole model", None,
+            QtGui.QApplication.translate("GeneVisualizationWidget", "Adjust the view to see the whole model", None,
                                          QtGui.QApplication.UnicodeUTF8))
         self.viewAllButton.setText(
-            QtGui.QApplication.translate("SmoothfitWidget", "View All", None, QtGui.QApplication.UnicodeUTF8))
-        self.doneButton.setToolTip(
-            QtGui.QApplication.translate("SmoothfitWidget", "Finish this step", None, QtGui.QApplication.UnicodeUTF8))
+            QtGui.QApplication.translate("GeneVisualizationWidget", "View All", None, QtGui.QApplication.UnicodeUTF8))
+        self.doneButton.setToolTip(QtGui.QApplication.translate("GeneVisualizationWidget", "Finish this step", None,
+                                                                QtGui.QApplication.UnicodeUTF8))
         self.doneButton.setText(
-            QtGui.QApplication.translate("SmoothfitWidget", "Done", None, QtGui.QApplication.UnicodeUTF8))
+            QtGui.QApplication.translate("GeneVisualizationWidget", "Done", None, QtGui.QApplication.UnicodeUTF8))
 
 
-from opencmiss.zincwidgets.sceneviewerwidget import SceneviewerWidget
+from opencmiss.zincwidgets.basesceneviewerwidget import BaseSceneviewerWidget
