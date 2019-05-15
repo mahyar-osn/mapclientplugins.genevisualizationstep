@@ -31,14 +31,15 @@ class MasterModel(object):
         tess = self._context.getTessellationmodule().getDefaultTessellation()
         tess.setRefinementFactors(12)
         self._material_module.defineStandardMaterials()
-        solidBlue = self._material_module.createMaterial()
-        solidBlue.setName('heart_tissue')
-        solidBlue.setManaged(True)
-        solidBlue.setAttributeReal3(Material.ATTRIBUTE_AMBIENT, [0.0, 0.2, 0.6])
-        solidBlue.setAttributeReal3(Material.ATTRIBUTE_DIFFUSE, [0.0, 0.7, 1.0])
-        solidBlue.setAttributeReal3(Material.ATTRIBUTE_EMISSION, [0.0, 0.0, 0.0])
-        solidBlue.setAttributeReal3(Material.ATTRIBUTE_SPECULAR, [0.1, 0.1, 0.1])
-        solidBlue.setAttributeReal(Material.ATTRIBUTE_SHININESS, 0.2)
+        solidTissue = self._material_module.createMaterial()
+        solidTissue.setName('heart_tissue')
+        solidTissue.setManaged(True)
+        solidTissue.setAttributeReal3(Material.ATTRIBUTE_AMBIENT, [0.8, 0.43, 0.33])
+        solidTissue.setAttributeReal3(Material.ATTRIBUTE_DIFFUSE, [0.8, 0.43, 0.33])
+        solidTissue.setAttributeReal3(Material.ATTRIBUTE_EMISSION, [0.0, 0.0, 0.0])
+        solidTissue.setAttributeReal3(Material.ATTRIBUTE_SPECULAR, [0.2, 0.2, 0.3])
+        solidTissue.setAttributeReal(Material.ATTRIBUTE_ALPHA, 1.0)
+        solidTissue.setAttributeReal(Material.ATTRIBUTE_SHININESS, 0.6)
 
     def get_context(self):
         return self._context
