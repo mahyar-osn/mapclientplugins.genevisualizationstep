@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SmoothfitWidget</class>
- <widget class="QWidget" name="SmoothfitWidget">
+ <class>GeneVisualizationWidget</class>
+ <widget class="QWidget" name="GeneVisualizationWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -221,7 +221,7 @@ QToolBox {
                       <verstretch>0</verstretch>
                      </sizepolicy>
                     </property>
-                    <layout class="QGridLayout" name="gridLayout" rowstretch="2">
+                    <layout class="QGridLayout" name="gridLayout" rowstretch="0">
                      <property name="leftMargin">
                       <number>0</number>
                      </property>
@@ -238,12 +238,12 @@ QToolBox {
                       <number>3</number>
                      </property>
                      <item row="0" column="1">
-                      <widget class="QPushButton" name="alignSaveButton">
+                      <widget class="QPushButton" name="viewXMLButton">
                        <property name="enabled">
                         <bool>true</bool>
                        </property>
                        <property name="toolTip">
-                        <string>Save alignment settings for recall later or when next run</string>
+                        <string>Show MBF segmented data</string>
                        </property>
                        <property name="text">
                         <string>XML/EX data</string>
@@ -256,7 +256,7 @@ QToolBox {
                         <bool>true</bool>
                        </property>
                        <property name="toolTip">
-                        <string>Load pre-saved alignment settings</string>
+                        <string>Show scaffold</string>
                        </property>
                        <property name="text">
                         <string>Scaffold</string>
@@ -549,7 +549,7 @@ QToolBox {
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>1</horstretch>
-       <verstretch>0</verstretch>
+       <verstretch>6</verstretch>
       </sizepolicy>
      </property>
     </widget>
