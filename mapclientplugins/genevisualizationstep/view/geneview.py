@@ -58,7 +58,3 @@ class GeneViewWidget(QtGui.QWidget):
 
     def _show_scaffold(self):
         self._scaffold_model.set_display_objects('display_surface', True)
-        num = self._logger.getNumberOfMessages()
-        print(num)
-        for i in range(0, num):
-            print(self._logger.getMessageTextAtIndex(i))
