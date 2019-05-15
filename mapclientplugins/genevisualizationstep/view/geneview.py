@@ -2,6 +2,7 @@ from PySide import QtGui, QtCore
 
 # from mapclientplugins.genevisualizationstep.view.ui_geneview import Ui_GeneVisualizationWidget
 from .ui_geneview import Ui_GeneVisualizationWidget
+from opencmiss.zinchandlers.scenemanipulation import SceneManipulation
 
 
 class GeneViewWidget(QtGui.QWidget):
@@ -13,6 +14,8 @@ class GeneViewWidget(QtGui.QWidget):
         self._model = model
         self._ui = Ui_GeneVisualizationWidget()
         self._ui.setupUi(self)
+        self._setup_handlers()
+
         self._ui.sceneviewerWidget.set_context(self._model.get_context())
         self._make_connections()
 
@@ -33,12 +36,13 @@ class GeneViewWidget(QtGui.QWidget):
     def _make_connections(self):
         self._ui.sceneviewerWidget.graphics_initialized.connect(self._graphics_initialized)
         self._ui.viewScaffoldButton.clicked.connect(self._show_scaffold)
+        self._ui.viewAllButton.clicked.connect(self._view_all)
 
     def _graphics_initialized(self):
         scene_viewer = self._ui.sceneviewerWidget.get_zinc_sceneviewer()
         if scene_viewer is not None:
             scene = self._model.get_scene()
-            self._ui.sceneviewerWidget.set_tumble_rate(0)
+            # self._ui.sceneviewerWidget.set_tumble_rate(0)  # For 2D viewing only i.e. no rotation.
             self._ui.sceneviewerWidget.set_scene(scene)
             if len(self._settings['view-parameters']) == 0:
                 self._view_all()
@@ -58,3 +62,7 @@ class GeneViewWidget(QtGui.QWidget):
 
     def _show_scaffold(self):
         self._scaffold_model.set_display_objects('display_surface', True)
+
+    def _setup_handlers(self):
+        basic_handler = SceneManipulation()
+        self._ui.sceneviewerWidget.register_handler(basic_handler)
