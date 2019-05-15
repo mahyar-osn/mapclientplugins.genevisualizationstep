@@ -11,21 +11,22 @@ from opencmiss.zinc.status import OK as ZINC_OK
 class ScaffoldModel(object):
 
     def __init__(self, filename, context, region, material_module):
+        super(ScaffoldModel, self).__init__()
         self._filename = filename
         self._context = context
         self._scaffold_region = region
-        self._initialize_scaffold()
-
-        self._settings = {'display_surface': True}
-
-        self._filedmodule = self._scaffold_region.getFieldmodule()
-        self._coordinates = self._filedmodule.findFieldByName('coordinates')
-
+        self._coordinates = None
+        self._scale = [1.0, 1.0, 1.0]
         self._material_module = material_module
-        self._scene = self._scaffold_region.getScene()
+        self._settings = {'display_surface': True}
+        self._initialize_scaffold()
+        self._generate_mesh()
         self._setup_scene()
+        self._scene = self._scaffold_region.getScene()
 
-        # self._generate_mesh()
+    def _create_graphics(self):
+        self._create_line_graphics()
+        self._create_surface_graphics()
 
     def _create_line_graphics(self):
         lines = self._scene.createGraphicsLines()
@@ -49,11 +50,27 @@ class ScaffoldModel(object):
         return surface
 
     def _generate_mesh(self):
-        self._filedmodule.beginChange()
-        self._magnitude = self._filedmodule.createFieldMagnitude(self._coordinates)
+        fm = self._scaffold_region.getFieldmodule()
+        fm.beginChange()
+        self._coordinates = fm.findFieldByName('coordinates')
+        self._scene = self._scaffold_region.getScene()
+        self._magnitude = fm.createFieldMagnitude(self._coordinates)
         self._magnitude.setName('magnitude')
         self._magnitude.setManaged(True)
-        self._filedmodule.endChange()
+        fm.endChange()
+        self._create_graphics()
+        # if self._sceneChangeCallback is not None:
+        #     self._sceneChangeCallback()
+
+    def _get_mesh(self):
+        fm = self._scaffold_region.getFieldmodule()
+        for dimension in range(3, 0, -1):
+            mesh = fm.findMeshByDimension(dimension)
+            if mesh.getSize() > 0:
+                break
+        if mesh.getSize() == 0:
+            mesh = fm.findMeshByDimension(3)
+        return mesh
 
     def _get_visibility(self, graphics_name):
         return self._settings[graphics_name]
@@ -65,11 +82,11 @@ class ScaffoldModel(object):
             pass
         else:
             print("Scaffold ex file was not read correctly! Check the path.")
-        # logger = self._context.getLogger()
-        # num = logger.getNumberOfMessages()
-        # print(num)
-        # for i in range(1, num):
-        #     print(logger.getMessageTextAtIndex(i))
+        logger = self._context.getLogger()
+        num = logger.getNumberOfMessages()
+        print(num)
+        for i in range(1, num):
+            print(logger.getMessageTextAtIndex(i))
 
     def is_display_surface(self, surface_name):
         return self._get_visibility(surface_name)
