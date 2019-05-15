@@ -40,6 +40,8 @@ class MasterModel(object):
         solidTissue.setAttributeReal3(Material.ATTRIBUTE_SPECULAR, [0.2, 0.2, 0.3])
         solidTissue.setAttributeReal(Material.ATTRIBUTE_ALPHA, 1.0)
         solidTissue.setAttributeReal(Material.ATTRIBUTE_SHININESS, 0.6)
+        glyphmodule = self._context.getGlyphmodule()
+        glyphmodule.defineStandardGlyphs()
 
     def get_context(self):
         return self._context
