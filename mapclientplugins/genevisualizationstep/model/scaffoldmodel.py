@@ -19,10 +19,6 @@ class ScaffoldModel(object):
         self._scale = [1.0, 1.0, 1.0]
         self._material_module = material_module
         self._settings = {'display_surface': True}
-        self._initialize_scaffold()
-        self._generate_mesh()
-        self._setup_scene()
-        self._scene = self._scaffold_region.getScene()
 
     def _create_graphics(self):
         self._create_line_graphics()
@@ -102,6 +98,10 @@ class ScaffoldModel(object):
         self._set_visibility(surface_name, show)
 
     def _set_visibility(self, graphics_name, show):
+        self._initialize_scaffold()
+        self._generate_mesh()
+        self._setup_scene()
+        self._scene = self._scaffold_region.getScene()
         self._settings[graphics_name] = show
         if 'display_surface' in graphics_name:
             graphics = self._scaffold_region.getScene().findGraphicsByName(graphics_name)
