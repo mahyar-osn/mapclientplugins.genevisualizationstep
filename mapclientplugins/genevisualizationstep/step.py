@@ -2,13 +2,16 @@
 """
 MAP Client Plugin Step
 """
+import os
 import json
 
 from PySide import QtGui
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
-from mapclientplugins.genevisualizationstep.configuredialog import ConfigureDialog
-from mapclientplugins.genevisualizationstep.utils.visualization import Visualization
+from .configuredialog import ConfigureDialog
+from .utils.visualization import Visualization
+from .model.master import MasterModel
+from .view.geneview import GeneViewWidget
 
 
 class GeneVisualizationStep(WorkflowStepMountPoint):
@@ -27,11 +30,21 @@ class GeneVisualizationStep(WorkflowStepMountPoint):
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#uses',
                       'data_frame'))
+        self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#uses',
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#file_location'))
+        self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#uses',
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#file_location'))
         # Port data:
         self._dataframe = None # data_frame
+        self._scaffold = None # data_frame
+        self._xml = None # data_frame
         # Config:
         self._config = {}
         self._config['identifier'] = ''
+        # Model:
+        self._model = None
 
     def execute(self):
         """
@@ -40,10 +53,36 @@ class GeneVisualizationStep(WorkflowStepMountPoint):
         may be connected up to a button in a widget for example.
         """
         # Put your execute step code here before calling the '_doneExecution' method.
-        vis = Visualization(self._dataframe)
-        vis.viewTable()
+        # vis = Visualization(self._dataframe)
+        # vis.viewTable()
 
+        all_settings = {}
+        try:
+            with open(self._get_settings_file_name()) as f:
+                all_settings = json.loads(f.read())
+        except EnvironmentError:
+            pass
+
+        self._model = MasterModel(self._scaffold)
+        self._view = GeneViewWidget(self._model)
+
+        if 'view' in all_settings:
+            self._view.set_settings(all_settings['view'])
+
+        self._view.register_done_callback(self._interactionDone)
+        self._setCurrentWidget(self._view)
+
+    def _interactionDone(self):
+        all_settings = {'view': self._view.get_settings()}
+        settings_in_string_form = json.dumps(all_settings, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+        with open(self._get_settings_file_name(), 'w') as f:
+            f.write(settings_in_string_form)
+
+        self._view = None
         self._doneExecution()
+
+    def _get_settings_file_name(self):
+        return os.path.join(self._location, self._config['identifier'] + '.settings')
 
     def setPortData(self, index, dataIn):
         """
@@ -54,7 +93,12 @@ class GeneVisualizationStep(WorkflowStepMountPoint):
         :param index: Index of the port to return.
         :param dataIn: The data to set for the port at the given index.
         """
-        self._dataframe = dataIn # data_frame
+        if index == 0:
+            self._dataframe = dataIn  # electrode_positions
+        elif index == 1:
+            self._scaffold = dataIn  # scaffold_parameters
+        elif index == 2:
+            self._xml = dataIn  # 2d_image_dimension
 
     def configure(self):
         """
