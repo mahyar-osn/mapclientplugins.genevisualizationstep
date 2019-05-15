@@ -58,7 +58,7 @@ class GeneVisualizationStep(WorkflowStepMountPoint):
 
         all_settings = {}
         try:
-            with open(self._get_settings_file_name()) as f:
+            with open(self._getSettingsFileName()) as f:
                 all_settings = json.loads(f.read())
         except EnvironmentError:
             pass
@@ -75,13 +75,13 @@ class GeneVisualizationStep(WorkflowStepMountPoint):
     def _interactionDone(self):
         all_settings = {'view': self._view.get_settings()}
         settings_in_string_form = json.dumps(all_settings, default=lambda o: o.__dict__, sort_keys=True, indent=4)
-        with open(self._get_settings_file_name(), 'w') as f:
+        with open(self._getSettingsFileName(), 'w') as f:
             f.write(settings_in_string_form)
 
         self._view = None
         self._doneExecution()
 
-    def _get_settings_file_name(self):
+    def _getSettingsFileName(self):
         return os.path.join(self._location, self._config['identifier'] + '.settings')
 
     def setPortData(self, index, dataIn):
