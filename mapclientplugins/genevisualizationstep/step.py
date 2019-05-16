@@ -9,7 +9,7 @@ from PySide import QtGui
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from .configuredialog import ConfigureDialog
-from .utils.visualization import Visualization
+from .utils.visualization import VisualizationHandler
 from .model.master import MasterModel
 from .view.geneview import GeneViewWidget
 
@@ -43,8 +43,10 @@ class GeneVisualizationStep(WorkflowStepMountPoint):
         # Config:
         self._config = {}
         self._config['identifier'] = ''
-        # Model:
+
         self._model = None
+        self._view = None
+        self._visual_handler = None
 
     def execute(self):
         """
@@ -53,7 +55,7 @@ class GeneVisualizationStep(WorkflowStepMountPoint):
         may be connected up to a button in a widget for example.
         """
         # Put your execute step code here before calling the '_doneExecution' method.
-        # vis = Visualization(self._dataframe)
+        self._visual_handler = VisualizationHandler(self._dataframe)
         # vis.viewTable()
 
         all_settings = {}
@@ -64,7 +66,7 @@ class GeneVisualizationStep(WorkflowStepMountPoint):
             pass
 
         self._model = MasterModel(self._scaffold)
-        self._view = GeneViewWidget(self._model)
+        self._view = GeneViewWidget(self._model, self._visual_handler)
 
         if 'view' in all_settings:
             self._view.set_settings(all_settings['view'])
