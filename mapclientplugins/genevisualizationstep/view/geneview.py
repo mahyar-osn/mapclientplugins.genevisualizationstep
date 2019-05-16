@@ -7,9 +7,10 @@ from opencmiss.zinchandlers.scenemanipulation import SceneManipulation
 
 class GeneViewWidget(QtGui.QWidget):
 
-    def __init__(self, model, parent=None):
+    def __init__(self, model, visual_handler, parent=None):
         super(GeneViewWidget, self).__init__(parent)
         self._scaffold_model = model.get_scaffold_model()
+        self._visual_handler = visual_handler
         self._logger = model.logger
         self._model = model
         self._ui = Ui_GeneVisualizationWidget()
@@ -37,6 +38,7 @@ class GeneViewWidget(QtGui.QWidget):
         self._ui.sceneviewerWidget.graphics_initialized.connect(self._graphics_initialized)
         self._ui.viewScaffoldButton.clicked.connect(self._show_scaffold)
         self._ui.viewAllButton.clicked.connect(self._view_all)
+        self._ui.dataTablepushButton.clicked.connect(self._show_data_table)
 
     def _graphics_initialized(self):
         scene_viewer = self._ui.sceneviewerWidget.get_zinc_sceneviewer()
@@ -62,6 +64,10 @@ class GeneViewWidget(QtGui.QWidget):
 
     def _show_scaffold(self):
         self._scaffold_model.set_display_objects('display_surface', True)
+
+    def _show_data_table(self):
+        self._visual_handler.view_table()
+        pass
 
     def _setup_handlers(self):
         basic_handler = SceneManipulation()
