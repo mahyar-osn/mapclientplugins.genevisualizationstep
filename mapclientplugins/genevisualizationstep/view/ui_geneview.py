@@ -191,9 +191,9 @@ class Ui_GeneVisualizationWidget(object):
         self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_5.setObjectName("gridLayout_5")
         self.verticalLayout_8.addWidget(self.viewerWidgets_2)
-        self.heatMappushButton_4 = QtGui.QPushButton(self.plotGroupBox)
-        self.heatMappushButton_4.setObjectName("heatMappushButton_4")
-        self.verticalLayout_8.addWidget(self.heatMappushButton_4)
+        self.dataTablepushButton = QtGui.QPushButton(self.plotGroupBox)
+        self.dataTablepushButton.setObjectName("dataTablepushButton")
+        self.verticalLayout_8.addWidget(self.dataTablepushButton)
         self.barPlotpushButton = QtGui.QPushButton(self.plotGroupBox)
         self.barPlotpushButton.setObjectName("barPlotpushButton")
         self.verticalLayout_8.addWidget(self.barPlotpushButton)
@@ -284,7 +284,7 @@ class Ui_GeneVisualizationWidget(object):
             QtGui.QApplication.translate("GeneVisualizationWidget", "Genes:", None, QtGui.QApplication.UnicodeUTF8))
         self.plotGroupBox.setTitle(
             QtGui.QApplication.translate("GeneVisualizationWidget", "Plot", None, QtGui.QApplication.UnicodeUTF8))
-        self.heatMappushButton_4.setText(
+        self.dataTablepushButton.setText(
             QtGui.QApplication.translate("GeneVisualizationWidget", "Table", None, QtGui.QApplication.UnicodeUTF8))
         self.barPlotpushButton.setText(
             QtGui.QApplication.translate("GeneVisualizationWidget", "Bar", None, QtGui.QApplication.UnicodeUTF8))
